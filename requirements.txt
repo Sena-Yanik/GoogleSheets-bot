@@ -1,0 +1,19 @@
+# Core
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-telegram-bot==21.10
+pydantic==2.10.5
+pydantic-settings==2.7.1
+
+# Google Sheets
+google-auth==2.37.0
+gspread==6.1.4
+
+# Redis
+redis[hiredis]==5.2.1
+
+# LLM
+groq==0.25.0
+
+# Logging
+structlog==24.4.0

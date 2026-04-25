@@ -1,0 +1,33 @@
+
+services:
+  bot:
+    build: .
+    env_file: .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "http"
+      - "bot:8000"
+      - "--domain=${NGROK_DOMAIN}"
+    env_file: .env
+    depends_on:
+      - bot
